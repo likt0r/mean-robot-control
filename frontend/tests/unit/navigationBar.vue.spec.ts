@@ -11,7 +11,20 @@ Vue.use(Vuetify);
 
 describe("NavigationBar.vue", () => {
   it("renders all tab items when passed", () => {
-    const tabItems = ["tab1", "tab2", "tab3"];
+    const tabItems = [
+      {
+        title: "tab1Text",
+        route: "tab1"
+      },
+      {
+        title: "tab2Text",
+        route: "tab2"
+      },
+      {
+        title: "tab3Text",
+        route: "tab3"
+      }
+    ];
     const wrapper = mount(NavigationBar, {
       propsData: { tabItems },
       localVue: createLocalVue(),
@@ -24,7 +37,7 @@ describe("NavigationBar.vue", () => {
     // expect(wrapper.find(".v-tab")).toHaveLength(2);
     expect(tabs.length).toBe(tabItems.length);
     tabItems.forEach((tab, index) => {
-      expect(tabs.wrappers[index].text()).toBe(tab);
+      expect(tabs.wrappers[index].text()).toBe(tab.title);
     });
   });
 });

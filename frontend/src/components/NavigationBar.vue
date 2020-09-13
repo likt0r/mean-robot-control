@@ -29,12 +29,12 @@
         <v-tabs v-model="tab" align-with-title>
           <v-tabs-slider color="yellow"></v-tabs-slider>
 
-          <v-tab v-for="item in tabItems" :key="item">
-            {{ item }}
+          <v-tab v-for="item in tabItems" :key="item.title" :to="item.to">
+            {{ $t(item.title) }}
           </v-tab>
         </v-tabs>
-      </template> </v-app-bar
-    >#
+      </template>
+    </v-app-bar>
   </fragment>
 </template>
 
@@ -46,7 +46,7 @@ export default defineComponent({
   props: {
     tabItems: Array
   },
-  setup(props) {
+  setup() {
     const drawer = ref(null);
     const tab = ref(null);
     return { drawer, tab };

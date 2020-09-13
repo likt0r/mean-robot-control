@@ -1,6 +1,6 @@
 <template>
   <v-app id="app">
-    <portal-target name="navigation-drawer">
+    <portal-target name="navigation-drawer-portal">
       <!--
   This component is located in Navigationbar
   -->
@@ -25,8 +25,24 @@ export default Vue.extend({
     NavigationBar
   },
   data: () => ({
-    drawer: null,
-    tabItems: ["web", "shopping", "videos", "images", "news"]
+    tabItems: [
+      {
+        title: "postures",
+        route: "postures"
+      },
+      {
+        title: "motions",
+        route: "motions"
+      },
+      {
+        title: "inputs",
+        route: "inputs"
+      },
+      {
+        title: "outputs",
+        route: "outputs"
+      }
+    ]
   }),
   created() {
     this.$vuetify.theme.dark = true;
