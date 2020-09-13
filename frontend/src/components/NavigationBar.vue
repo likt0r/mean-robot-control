@@ -29,7 +29,7 @@
         <v-tabs v-model="tab" align-with-title>
           <v-tabs-slider color="yellow"></v-tabs-slider>
 
-          <v-tab v-for="item in tabItems" :key="item.title" :to="item.to">
+          <v-tab v-for="item in tabItems" :key="item.title" :to="item.route">
             {{ $t(item.title) }}
           </v-tab>
         </v-tabs>

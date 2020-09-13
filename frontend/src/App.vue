@@ -18,32 +18,37 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { defineComponent, ref } from "@vue/composition-api";
+
 import NavigationBar from "@/components/NavigationBar.vue";
-export default Vue.extend({
+
+export default defineComponent({
   name: "App",
   components: {
     NavigationBar
   },
-  data: () => ({
-    tabItems: [
+  setup() {
+    const tabItems = ref([
       {
         title: "postures",
-        route: "postures"
+        route: "/postures"
       },
       {
         title: "motions",
-        route: "motions"
+        route: "/motions"
       },
       {
         title: "inputs",
-        route: "inputs"
+        route: "/inputs"
       },
       {
         title: "outputs",
-        route: "outputs"
+        route: "/outputs"
       }
-    ]
-  }),
+    ]);
+    return { tabItems };
+  },
+
   created() {
     this.$vuetify.theme.dark = true;
   }

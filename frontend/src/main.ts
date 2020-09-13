@@ -11,7 +11,6 @@ import Vuetify from "vuetify/lib";
 
 Vue.use(Vuetify);
 Vue.use(VueI18n);
-
 Vue.use(VueCompositionAPI);
 Vue.use(PortalVue);
 Vue.use(Fragment.Plugin);
