@@ -68,4 +68,11 @@ describe("dataStructure Actuator class", () => {
     }
     expect(() => actuator.setValue(0, dS.outputs[0].minValue - 0.1)).toThrow();
   });
+
+  it("test displayed value mapping,", () => {
+    const actuator = Actuator.fromPlainObject(dS);
+    const value = 0.5;
+    actuator.setValue(0, value);
+    expect(actuator.getDisplayedValue(0)).toBe(50);
+  });
 });

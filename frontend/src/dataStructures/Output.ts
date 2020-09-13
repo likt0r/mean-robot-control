@@ -1,7 +1,7 @@
 export enum actuatorTypes {
   Servo = "servo",
   Led = "led",
-  RgbLed = " rgbLed"
+  RgbLed = "rgbLed"
 }
 export class Output {
   name: string;
@@ -53,6 +53,22 @@ export class Actuator {
   }
   public getValue(position: number): number {
     return this.outputs[position].value;
+  }
+  public getDisplayedValue(position: number): number {
+    const {
+      value,
+      minValue,
+      maxValue,
+      displayedMaxValue,
+      displayedMinValue
+    } = this.outputs[position];
+    // Transform current value to
+
+    const normalisedValue = (value - minValue) / (maxValue - minValue);
+    return (
+      normalisedValue * (displayedMaxValue - displayedMinValue) +
+      displayedMinValue
+    );
   }
   static fromPlainObject(plainObject: any): Actuator {
     const outputs = plainObject.outputs.map((output: any) => {
