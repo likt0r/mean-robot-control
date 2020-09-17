@@ -1,43 +1,18 @@
+import HardwareOutput from "@/dataStructures/HardwareOutput";
 export enum actuatorTypes {
   Servo = "servo",
   Led = "led",
   RgbLed = "rgbLed"
 }
-export class Output {
-  name: string;
-  maxValue: number;
-  minValue: number;
-  pwmFrequency: number;
-  displayedMaxValue: number;
-  displayedMinValue: number;
-  displayedSteps: number;
-  value: number;
-  constructor(
-    name = "",
-    maxValue: number,
-    minValue: number,
-    pwmFrequency: number,
-    displayedMaxValue: number,
-    displayedMinValue: number,
-    displayedSteps: number
-  ) {
-    this.name = name;
-    this.maxValue = maxValue;
-    this.minValue = minValue;
-    this.pwmFrequency = pwmFrequency;
-    this.displayedMaxValue = displayedMaxValue;
-    this.displayedMinValue = displayedMinValue;
-    this.displayedSteps = displayedSteps;
-    // set middle value as startvalue
-    this.value = (maxValue - minValue) / 2 + minValue;
-  }
-}
-
-export class Actuator {
+export default class Actuator {
   name: string;
   type: actuatorTypes;
-  outputs: Array<Output>;
-  constructor(name: string, type: actuatorTypes, outputs: Array<Output>) {
+  outputs: Array<HardwareOutput>;
+  constructor(
+    name: string,
+    type: actuatorTypes,
+    outputs: Array<HardwareOutput>
+  ) {
     this.name = name;
     this.type = type;
     this.outputs = outputs;
@@ -88,7 +63,7 @@ export class Actuator {
         );
       }
 
-      return new Output(
+      return new HardwareOutput(
         output.name,
         output.maxValue,
         output.minValue,

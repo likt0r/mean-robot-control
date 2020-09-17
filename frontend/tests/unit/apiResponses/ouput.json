@@ -1,0 +1,88 @@
+[
+  {
+    "type": "servo",
+    "name": "Head-Yaw",
+    "outputs": [
+      {
+        "maxValue": 0.9,
+        "minValue": 0.1,
+        "pwmFrequency": 100,
+        "displayedMaxValue": 100,
+        "displayedMinValue": 0,
+        "displayedSteps": 50
+      }
+    ]
+  },
+  {
+    "type": "servo",
+    "name": "Head-Tilt",
+    "outputs": [
+      {
+        "maxValue": 0.4,
+        "minValue": 0.2,
+        "pwmFrequency": 100,
+        "displayedMaxValue": 30,
+        "displayedMinValue": 10,
+        "displayedSteps": 20
+      }
+    ]
+  },
+  {
+    "type": "servo",
+    "name": "Head-Pitch",
+    "outputs": [
+      {
+        "maxValue": 0.9,
+        "minValue": 0.2,
+        "pwmFrequency": 100,
+        "displayedMaxValue": 100,
+        "displayedMinValue": 0,
+        "displayedSteps": 100
+      }
+    ]
+  },
+  {
+    "type": "led",
+    "name": "Head-Pitch",
+    "outputs": [
+      {
+        "maxValue": 1,
+        "minValue": 0,
+        "pwmFrequency": 100,
+        "displayedMaxValue": 100,
+        "displayedMinValue": 0,
+        "displayedSteps": 100
+      }
+    ]
+  },
+  {
+    "type": "rgbLed",
+    "name": "Head-Pitch",
+    "outputs": [
+      {
+        "maxValue": 1,
+        "minValue": 0,
+        "pwmFrequency": 100,
+        "displayedMaxValue": 100,
+        "displayedMinValue": 0,
+        "displayedSteps": 100
+      },
+      {
+        "maxValue": 1,
+        "minValue": 0,
+        "pwmFrequency": 100,
+        "displayedMaxValue": 100,
+        "displayedMinValue": 0,
+        "displayedSteps": 100
+      },
+      {
+        "maxValue": 1,
+        "minValue": 0,
+        "pwmFrequency": 100,
+        "displayedMaxValue": 100,
+        "displayedMinValue": 0,
+        "displayedSteps": 100
+      }
+    ]
+  }
+]

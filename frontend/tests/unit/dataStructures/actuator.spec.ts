@@ -1,4 +1,4 @@
-import { Actuator } from "@/dataStructures/Output";
+import Actuator from "@/dataStructures/Actuator";
 
 const dS = {
   type: "servo",
