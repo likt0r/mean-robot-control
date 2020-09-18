@@ -1,28 +1,124 @@
 <template>
   <v-list>
-    <v-list-item v-for="item in outputs" :key="item.id">
-      <v-list-item-avatar>
-        <v-img :src="item.avatar"></v-img>
-      </v-list-item-avatar>
-
-      <v-list-item-content>
-        <v-list-item-title v-text="item.title"></v-list-item-title>
-      </v-list-item-content>
-
-      <v-list-item-icon>
-        <v-icon>chat_bubble</v-icon>
-      </v-list-item-icon>
-    </v-list-item>
+    <ListItemActuator v-for="output in outputs" :key="output.id" :data="output">
+    </ListItemActuator>
   </v-list>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
 import axios from "axios";
+import { defineComponent, ref } from "@vue/composition-api";
+import ListItemActuator from "@/components/ListItemActuator.vue";
+import Acutator from "../dataStructures/Actuator";
+
 export default defineComponent({
+  components: {
+    ListItemActuator
+  },
   setup() {
     // const result = axios.get();
-    const outputs = ref([]);
+    const outputs = ref(
+      [
+        {
+          id: 1,
+          type: "servo",
+          name: "Head-Yaw",
+          outputs: [
+            {
+              id: 11,
+              maxValue: 0.9,
+              minValue: 0.1,
+              pwmFrequency: 100,
+              displayedMaxValue: 100,
+              displayedMinValue: 0,
+              displayedSteps: 50
+            }
+          ]
+        },
+        {
+          id: 2,
+          type: "servo",
+          name: "Head-Tilt",
+          outputs: [
+            {
+              id: 12,
+              maxValue: 0.4,
+              minValue: 0.2,
+              pwmFrequency: 100,
+              displayedMaxValue: 30,
+              displayedMinValue: 10,
+              displayedSteps: 20
+            }
+          ]
+        },
+        {
+          id: 3,
+          type: "servo",
+          name: "Head-Pitch",
+          outputs: [
+            {
+              id: 13,
+              maxValue: 0.9,
+              minValue: 0.2,
+              pwmFrequency: 100,
+              displayedMaxValue: 100,
+              displayedMinValue: 0,
+              displayedSteps: 100
+            }
+          ]
+        },
+        {
+          id: 4,
+          type: "led",
+          name: "Head-Pitch",
+          outputs: [
+            {
+              id: 14,
+              maxValue: 1,
+              minValue: 0,
+              pwmFrequency: 100,
+              displayedMaxValue: 100,
+              displayedMinValue: 0,
+              displayedSteps: 100
+            }
+          ]
+        },
+        {
+          id: 5,
+          type: "rgbLed",
+          name: "Head-Pitch",
+          outputs: [
+            {
+              id: 15,
+              maxValue: 1,
+              minValue: 0,
+              pwmFrequency: 100,
+              displayedMaxValue: 100,
+              displayedMinValue: 0,
+              displayedSteps: 100
+            },
+            {
+              id: 16,
+              maxValue: 1,
+              minValue: 0,
+              pwmFrequency: 100,
+              displayedMaxValue: 100,
+              displayedMinValue: 0,
+              displayedSteps: 100
+            },
+            {
+              id: 17,
+              maxValue: 1,
+              minValue: 0,
+              pwmFrequency: 100,
+              displayedMaxValue: 100,
+              displayedMinValue: 0,
+              displayedSteps: 100
+            }
+          ]
+        }
+      ].map(el => Acutator.fromPlainObject(el))
+    );
     return { outputs };
   }
 });
