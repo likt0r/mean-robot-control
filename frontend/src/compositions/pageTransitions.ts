@@ -10,7 +10,7 @@ export default function usePageTransitions(router: VueRouter) {
   }
   function enter(element: any) {
     const { height } = getComputedStyle(element);
-    element.style.height = prevHeight;
+    element.style.height = prevHeight.value;
     setTimeout(() => {
       element.style.height = height;
     });
