@@ -13,5 +13,12 @@
   "save": "save",
   "steps": "steps",
   "type": "type",
-  "value": "value"
+  "value": "value",
+  "output": "Output",
+  "pwmFrequency": "PWM-Frequency",
+  "maxValue": "Maximum value",
+  "minValue": "Minmum value",
+  "displayedMaxValue": "Displayed maximum value",
+  "displayedMinValue": "Displayed minimum value",
+  "displayedSteps": "Displayed steps"
 }

@@ -8,7 +8,7 @@
       <v-list-item-title v-text="data.name"></v-list-item-title>
       <v-form v-model="valid">
         <v-container>
-          <ActuatorOutput
+          <HardwareOutputComponent
             v-for="output in data.outputs"
             :key="output.id"
             :data="output"
@@ -26,10 +26,10 @@
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import Actuator from "../dataStructures/Actuator";
-import ActuatorOutput from "./ActuatorOutput.vue";
+import HardwareOutputComponent from "./HardwareOutputComponent.vue";
 export default defineComponent({
   components: {
-    ActuatorOutput
+    HardwareOutputComponent
   },
   props: {
     data: Actuator

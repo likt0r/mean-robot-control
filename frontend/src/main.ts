@@ -26,6 +26,20 @@ new Vue({
   router,
   store,
   i18n,
-  vuetify: new Vuetify({}),
+  vuetify: new Vuetify({
+    theme: {
+      themes: {
+        light: {
+          primary: "#ff9800",
+          secondary: "#ff5722",
+          accent: "#03a9f4",
+          error: "#f44336",
+          warning: "#ffc107",
+          info: "#8bc34a",
+          success: "#cddc39"
+        }
+      }
+    }
+  }),
   render: h => h(App)
 }).$mount("#app");

@@ -47,10 +47,6 @@ export default defineComponent({
       }
     ]);
     return { tabItems };
-  },
-
-  created() {
-    this.$vuetify.theme.dark = true;
   }
 });
 </script>
