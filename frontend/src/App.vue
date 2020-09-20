@@ -2,7 +2,7 @@
   <v-app id="app">
     <portal-target name="navigation-drawer-portal">
       <!--
-  This component is located in Navigationbar
+  This component is located in Navigationbar.vue
   -->
     </portal-target>
     <navigation-bar :tab-items="tabItems" />
@@ -26,9 +26,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
-
 import NavigationBar from "@/components/NavigationBar.vue";
-const DEFAULT_TRANSITION = "fade";
+import usePageTransitions from "./compositions/pageTransitions";
 export default defineComponent({
   name: "App",
   components: {
@@ -57,38 +56,21 @@ export default defineComponent({
         icon: "inbox-arrow-up-outline"
       }
     ]);
-    const prevHeight = ref(0);
-    const transitionName = ref(DEFAULT_TRANSITION);
-    function beforeLeave(element: any) {
-      prevHeight.value = parseInt(getComputedStyle(element).height);
-    }
-    function enter(element: any) {
-      const { height } = getComputedStyle(element);
-
-      element.style.height = prevHeight;
-
-      setTimeout(() => {
-        element.style.height = height;
-      });
-    }
-    function afterEnter(element: any) {
-      element.style.height = "auto";
-    }
-    root.$router.beforeEach((to, from, next) => {
-      let newTransitionName =
-        to.meta.transitionName || from.meta.transitionName;
-      if (newTransitionName === "slide") {
-        const toDepth = to.path.split("/").length;
-        const fromDepth = from.path.split("/").length;
-        newTransitionName = toDepth < fromDepth ? "slide-right" : "slide-left";
-      }
-
-      transitionName.value = newTransitionName || DEFAULT_TRANSITION;
-
-      next();
-    });
-
-    return { tabItems, prevHeight, transitionName };
+    const {
+      prevHeight,
+      transitionName,
+      enter,
+      beforeLeave,
+      afterEnter
+    } = usePageTransitions(root.$router);
+    return {
+      tabItems,
+      prevHeight,
+      transitionName,
+      enter,
+      beforeLeave,
+      afterEnter
+    };
   }
 });
 </script>
