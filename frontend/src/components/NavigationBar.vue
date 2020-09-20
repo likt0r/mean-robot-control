@@ -3,37 +3,36 @@
     <portal-target name="navigation-drawer">
       <v-navigation-drawer v-model="drawer" app clipped>
         <v-list dense>
-          <v-list-item link>
+          <v-list-item
+            v-for="item in tabItems"
+            :key="item.title"
+            :to="item.route"
+            link
+          >
             <v-list-item-action>
-              <v-icon>mdi-view-dashboard</v-icon>
+              <v-icon>mdi-{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title>Dashboard</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item link>
-            <v-list-item-action>
-              <v-icon>mdi-cog</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title>Settings</v-list-item-title>
+              <v-list-item-title> {{ $t(item.title) }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
     </portal-target>
-    <v-app-bar app clipped-left color="accent">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
-      <template v-slot:extension>
-        <v-tabs v-model="tab" align-with-title>
-          <v-tabs-slider color="yellow"></v-tabs-slider>
-
-          <v-tab v-for="item in tabItems" :key="item.title" :to="item.route">
-            {{ $t(item.title) }}
-          </v-tab>
-        </v-tabs>
-      </template>
+    <v-app-bar app clipped-left color="accent" class="white--text">
+      <fragment v-if="$vuetify.breakpoint.width < 600">
+        <v-app-bar-nav-icon
+          color="white"
+          @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
+      </fragment>
+      <v-tabs v-else v-model="tab" icons-and-text centered>
+        <v-tabs-slider color="yellow"></v-tabs-slider>
+        <v-tab v-for="item in tabItems" :key="item.title" :to="item.route">
+          {{ $t(item.title) }}
+          <v-icon v-if="item.icon">mdi-{{ item.icon }}</v-icon>
+        </v-tab>
+      </v-tabs>
     </v-app-bar>
   </fragment>
 </template>
@@ -53,3 +52,13 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.v-tab,
+.v-tab .v-icon {
+  color: white !important;
+}
+a.v-tab.v-tab--active {
+  color: var(--primary) !important;
+}
+</style>

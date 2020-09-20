@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <h1>Postures</h1>
-    <v-btn to="/postures/5">single posture</v-btn>
+    <h1>Posture ID {{ $route.params.id }}</h1>
+    <v-button to="/posutures">single postures</v-button>
   </v-container>
 </template>
 

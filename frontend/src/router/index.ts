@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -13,13 +12,33 @@ const routes: Array<RouteConfig> = [
     path: "/postures",
     name: "Postures",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Postures.vue")
+      import(/* webpackChunkName: "postures" */ "../views/Postures.vue")
+  },
+  {
+    path: "/postures/:id",
+    meta: { transitionName: "slide" },
+    name: "Posture",
+    component: () =>
+      import(/* webpackChunkName: "posture" */ "../views/Posture.vue")
+  },
+  {
+    path: "/motions",
+    name: "Motions",
+    component: () =>
+      import(/* webpackChunkName: "motions" */ "../views/Motions.vue")
+  },
+  {
+    path: "/motions/:id",
+    meta: { transitionName: "slide" },
+    name: "Motion",
+    component: () =>
+      import(/* webpackChunkName: "motion" */ "../views/Motion.vue")
   },
   {
     path: "/outputs",
     name: "Outputs",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Outputs.vue")
+      import(/* webpackChunkName: "outputs" */ "../views/Outputs.vue")
   }
 ];
 

@@ -1,4 +1,4 @@
-<template><h1>motions</h1> </template>
+<template><h1>motion</h1></template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
