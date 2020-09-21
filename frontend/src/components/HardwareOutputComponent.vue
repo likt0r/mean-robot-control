@@ -1,25 +1,24 @@
 <template>
-  <v-card outlined>
+  <v-card :outlined="outlined">
+    <slot name="header"></slot>
     <v-card-actions class="pt-0">
       <v-text-field
         ref="name"
-        v-model="data.name"
+        v-model="name"
         :label="$t('output')"
         required
       ></v-text-field>
 
       <v-spacer></v-spacer>
-      <v-btn ref="delete" icon color="primary" @click="$emit('delete')">
-        <v-icon>mdi-delete</v-icon>
-      </v-btn>
+      <slot name="headerCardActions"></slot>
     </v-card-actions>
     <v-card-text>
       <v-row justify="center">
         <v-col cols="12" sm="3">
           <v-text-field
             ref="pwmFrequency"
-            v-model="data.pwmFrequency"
-            :rules="[pwmGreaterZero(data.pwmFrequency)]"
+            v-model="pwmFrequency"
+            :rules="[greaterZero(pwmFrequency)]"
             type="number"
             :label="$t('pwmFrequency')"
             required
@@ -30,7 +29,8 @@
             ref="maxValue"
             max="1"
             min="0"
-            v-model="data.maxValue"
+            v-model="maxValue"
+            :rules="[greaterZero(maxValue), smallerEqualOne(maxValue)]"
             type="number"
             :label="$t('maxValue')"
             required
@@ -39,7 +39,8 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="minValue"
-            v-model="data.minValue"
+            v-model="minValue"
+            :rules="[greaterEqualZero(minValue), smallerOne(minValue)]"
             type="number"
             :label="$t('minValue')"
             required
@@ -50,7 +51,11 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="displayedMaxValue"
-            v-model="data.displayedMaxValue"
+            v-model="displayedMaxValue"
+            :rules="[
+              greaterEqualZero(displayedMaxValue),
+              smallerOne(displayedMaxValue)
+            ]"
             type="number"
             :label="$t('displayedMaxValue')"
             required
@@ -59,7 +64,8 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="displayedMinValue"
-            v-model="data.displayedMinValue"
+            v-model="displayedMinValue"
+            :rules="[greaterEqualZero(displayedMinValue)]"
             type="number"
             :label="$t('displayedMinValue')"
             required
@@ -68,7 +74,7 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="displayedSteps"
-            v-model="data.displayedSteps"
+            v-model="displayedSteps"
             type="number"
             :label="$t('displayedSteps')"
             required
@@ -77,17 +83,7 @@
       </v-row>
     </v-card-text>
     <v-card-actions class="pt-0">
-      <v-text-field
-        ref="name"
-        v-model="data.name"
-        :label="$t('output')"
-        required
-      ></v-text-field>
-
-      <v-spacer></v-spacer>
-      <v-btn ref="delete" icon color="primary" @click="$emit('delete')">
-        <v-icon>mdi-delete</v-icon>
-      </v-btn>
+      <slot name="footerCardActions"></slot>
     </v-card-actions>
   </v-card>
 </template>
@@ -95,16 +91,34 @@
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
 import HardwareOutput from "../dataStructures/HardwareOutput";
+import {
+  greaterEqual,
+  smallerEqual,
+  greater,
+  smaller
+} from "../tools/formRules";
 export default defineComponent({
   // type inference enabled
   props: {
-    data: HardwareOutput
+    outlined: {
+      type: Boolean,
+      default: false
+    },
+    name: String,
+    pwmFrequency: Number,
+    maxValue: Number,
+    minValue: Number,
+    displayedMaxValue: Number,
+    displayedMinValue: Number,
+    displayedSteps: Number
   },
   setup() {
-    function pwmGreaterZero(value: number) {
-      return value > 0 || "PWM-Frequency must be greater 0";
-    }
-    return { pwmGreaterZero };
+    return {
+      greaterZero: greater(0, "greaterZero"),
+      greaterEqualZero: greaterEqual(0, "greaterEqualZero"),
+      smallerEqualOne: smallerEqual(1, "smallerEqualOne"),
+      smallerOne: smaller(1, "smallerOne")
+    };
   }
 });
 </script>

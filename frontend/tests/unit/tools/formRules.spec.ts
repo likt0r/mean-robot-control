@@ -3,7 +3,12 @@ jest.mock("@/i18n/index", () => {
     getI18n: () => ({ t: (message: String) => message })
   };
 });
-import { greater, smallerEqual, greaterEqual } from "@/tools/formRules";
+import {
+  greater,
+  smaller,
+  smallerEqual,
+  greaterEqual
+} from "@/tools/formRules";
 
 describe("formRules.ts", () => {
   it("test greater,", () => {
@@ -13,6 +18,14 @@ describe("formRules.ts", () => {
     expect(testFn(3)).toBe(true);
     expect(testFn(2)).toBe(violationMessage);
     expect(testFn(1)).toBe(violationMessage);
+  });
+  it("test smaller,", () => {
+    const border = 2;
+    const violationMessage = '345434dsewrwer3424asd3243423§"$"§3';
+    const testFn = smaller(2, violationMessage);
+    expect(testFn(1)).toBe(true);
+    expect(testFn(2)).toBe(violationMessage);
+    expect(testFn(3)).toBe(violationMessage);
   });
   it("test smallerEqual,", () => {
     const border = 2;

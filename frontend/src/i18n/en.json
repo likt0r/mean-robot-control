@@ -23,7 +23,8 @@
   "displayedSteps": "Displayed steps",
   "newHardwareOutputTitle": "New hardware output",
   "add": "add",
-  "greaterZero": "value hast to be greater zero",
-  "smallerEqualOne": "value hast to be smaller or equal one",
-  "greaterEqualZero": "value hast to be equal or greater zero"
+  "greaterZero": "Value hast to be greater zero",
+  "smallerEqualOne": "Value hast to be smaller or equal one",
+  "smallerOne": "Value hast to be smaller one",
+  "greaterEqualZero": "Value hast to be equal or greater zero"
 }

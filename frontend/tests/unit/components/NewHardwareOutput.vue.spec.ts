@@ -1,7 +1,11 @@
 import Actuator, { actuatorTypes } from "@/dataStructures/Actuator";
 import VueCompositionAPI from "@vue/composition-api";
 import { mount, createLocalVue, shallowMount } from "@vue/test-utils";
-
+jest.mock("@/i18n/index", () => {
+  return {
+    getI18n: () => ({ t: (message: String) => message })
+  };
+});
 import Vue from "vue";
 import Vuetify from "vuetify";
 import VueI18n from "vue-i18n";
@@ -30,6 +34,19 @@ describe("NewHardwareOutput.vue", () => {
       });
     });
   });
+
+  // it("check input boundaries", () => {
+  //   document.body.setAttribute("data-app", "true");
+  //   const wrapper = mount(NewHardwareOutput, {
+  //     localVue: createLocalVue(),
+  //     vuetify: new Vuetify({}),
+  //     i18n,
+  //     stubs: {}
+  //   });
+  //   expect(
+  //     wrapper.findComponent({ ref: "dialogContent" }).isVisible()
+  //   ).toBeTruthy();
+  // });
 
   // it("delte one HardwareOutputComponent", done => {
   //   const wrapper = mount(ListItemActuator, {

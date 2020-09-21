@@ -4,7 +4,11 @@ import VueCompositionAPI from "@vue/composition-api";
 import Vuetify from "vuetify";
 import HardwareOutputComponent from "@/components/HardwareOutputComponent.vue";
 import HardwareOutput from "@/dataStructures/HardwareOutput";
-
+jest.mock("@/i18n/index", () => {
+  return {
+    getI18n: () => ({ t: (message: String) => message })
+  };
+});
 Vue.use(Vuetify);
 Vue.use(VueCompositionAPI);
 const oD = new HardwareOutput(12, "head-yaw", 1, 0.2, 100, 100, 0, 100);
@@ -12,7 +16,15 @@ const oD = new HardwareOutput(12, "head-yaw", 1, 0.2, 100, 100, 0, 100);
 describe("ListSubItemHardwareOutput.vue", () => {
   it("renders all values in its correct input", () => {
     const wrapper = mount(HardwareOutputComponent, {
-      propsData: { data: oD },
+      propsData: {
+        name: oD.name,
+        pwmFrequency: oD.pwmFrequency,
+        maxValue: oD.maxValue,
+        minValue: oD.minValue,
+        displayedMaxValue: oD.displayedMaxValue,
+        displayedMinValue: oD.displayedMinValue,
+        displayedSteps: oD.displayedSteps
+      },
       localVue: createLocalVue(),
       vuetify: new Vuetify({}),
       stubs: {}
@@ -37,16 +49,5 @@ describe("ListSubItemHardwareOutput.vue", () => {
     expect((wrapper.vm.$refs.displayedSteps as HTMLInputElement).value).toBe(
       oD.displayedSteps
     );
-  });
-
-  it("emit delte event on delete button click", () => {
-    const wrapper = mount(HardwareOutputComponent, {
-      propsData: { data: oD },
-      localVue: createLocalVue(),
-      vuetify: new Vuetify({}),
-      stubs: {}
-    });
-    wrapper.findComponent({ ref: "delete" }).trigger("click");
-    expect(wrapper.emitted().delete).toBeTruthy();
   });
 });
