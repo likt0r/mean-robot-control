@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueCompositionAPI from "@vue/composition-api";
-import { messages, defaultLocale } from "@/i18n";
+import { getI18n } from "@/i18n";
 import PortalVue from "portal-vue";
 import Fragment from "vue-fragment";
 import VueI18n from "vue-i18n";
@@ -32,11 +32,7 @@ const vuetify = new Vuetify({
     }
   }
 });
-const i18n = new VueI18n({
-  messages,
-  locale: defaultLocale,
-  fallbackLocale: defaultLocale
-});
+const i18n = getI18n();
 new Vue({
   router,
   store,

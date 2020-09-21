@@ -6,37 +6,44 @@
 
     <v-list-item-content>
       <v-list-item-title v-text="data.name"></v-list-item-title>
-      <v-form v-model="valid">
-        <v-container>
-          <HardwareOutputComponent
-            v-for="output in data.outputs"
-            :key="output.id"
-            :data="output"
-          />
-        </v-container>
-      </v-form>
-    </v-list-item-content>
 
-    <v-list-item-icon>
-      <v-icon>chat_bubble</v-icon>
-    </v-list-item-icon>
+      <v-container>
+        <HardwareOutputComponent
+          v-for="(output, index) in data.outputs"
+          :key="output.id"
+          :data="output"
+          @delete="deleteOutput(index)"
+        />
+        <NewHardwareOutput> </NewHardwareOutput>
+      </v-container>
+    </v-list-item-content>
   </v-list-item>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "@vue/composition-api";
 import Actuator from "../dataStructures/Actuator";
+import HardwareOutput from "../dataStructures/HardwareOutput";
 import HardwareOutputComponent from "./HardwareOutputComponent.vue";
+import NewHardwareOutput from "./NewHardwareOutput.vue";
 export default defineComponent({
   components: {
-    HardwareOutputComponent
+    HardwareOutputComponent,
+    NewHardwareOutput
   },
   props: {
     data: Actuator
   },
-  setup() {
+  setup(props) {
     const valid = ref(false);
-    return { valid };
+    function deleteOutput(index: number) {
+      if (props && props.data) props.data.delteOutput(index);
+    }
+    function addOutput() {
+      if (props && props.data)
+        props.data.addOutput(new HardwareOutput(1, "1", 1, 0, 100, 100, 1, 2));
+    }
+    return { valid, deleteOutput, addOutput };
   }
 });
 </script>

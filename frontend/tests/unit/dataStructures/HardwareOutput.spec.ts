@@ -2,7 +2,7 @@ import HardwareOutput from "@/dataStructures/HardwareOutput";
 
 describe("dataStructure HardwareOutput class", () => {
   it("test if string or number values end up in number values,", () => {
-    const ho = new HardwareOutput("name", 1, 0, 100, 100, 1, 100);
+    const ho = new HardwareOutput(23, "name", 1, 0, 100, 100, 1, 100);
 
     const values: any = [1, "1"];
     const typesafeAttributes = [
@@ -44,7 +44,7 @@ describe("dataStructure HardwareOutput class", () => {
     });
   });
   it("test rage errors of value property,", () => {
-    const ho = new HardwareOutput("name", 1, 0.2, 100, 100, 1, 100);
+    const ho = new HardwareOutput(23, "name", 1, 0.2, 100, 100, 1, 100);
     expect(() => (ho.value = 10)).toThrow(RangeError);
     expect(() => (ho.value = 0.1)).toThrow(RangeError);
     expect(() => (ho.value = 1)).not.toThrow(RangeError);

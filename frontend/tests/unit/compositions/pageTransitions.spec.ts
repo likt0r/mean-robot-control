@@ -21,7 +21,5 @@ describe("test pageTransition composition methods", () => {
     );
     afterEnter(document.body.firstChild);
     expect((document.body.firstChild as any).style.height).toBe("auto");
-    // jest.runAllTimers();
-    // expect(prevHeight.value).toBe(100);
   });
 });

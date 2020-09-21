@@ -20,5 +20,7 @@
   "minValue": "Minmum value",
   "displayedMaxValue": "Displayed maximum value",
   "displayedMinValue": "Displayed minimum value",
-  "displayedSteps": "Displayed steps"
+  "displayedSteps": "Displayed steps",
+  "newHardwareOutputTitle": "New hardware output",
+  "add": "add"
 }

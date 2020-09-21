@@ -5,14 +5,17 @@ export enum actuatorTypes {
   RgbLed = "rgbLed"
 }
 export default class Actuator {
+  id: number;
   name: string;
   type: actuatorTypes;
   outputs: Array<HardwareOutput>;
   constructor(
+    id: number,
     name: string,
     type: actuatorTypes,
     outputs: Array<HardwareOutput>
   ) {
+    this.id = id;
     this.name = name;
     this.type = type;
     this.outputs = outputs;
@@ -45,10 +48,20 @@ export default class Actuator {
       displayedMinValue
     );
   }
+  public delteOutput(index: number) {
+    this.outputs.splice(index, 1);
+  }
+  public addOutput(output: HardwareOutput) {
+    this.outputs.push(output);
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   static fromPlainObject(plainObject: any): Actuator {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const outputs = plainObject.outputs.map((output: any) => {
       // Typechecking all parameters
       if (
+        typeof output.id !== "number" ||
+        typeof output.name !== "string" ||
         typeof output.maxValue !== "number" ||
         typeof output.minValue !== "number" ||
         typeof output.pwmFrequency !== "number" ||
@@ -64,6 +77,7 @@ export default class Actuator {
       }
 
       return new HardwareOutput(
+        output.id,
         output.name,
         output.maxValue,
         output.minValue,
@@ -75,6 +89,7 @@ export default class Actuator {
     });
     if (
       !Array.isArray(plainObject.outputs) ||
+      typeof plainObject.id !== "number" ||
       typeof plainObject.type !== "string" ||
       typeof plainObject.name !== "string"
     ) {
@@ -84,6 +99,11 @@ export default class Actuator {
         )}`
       );
     }
-    return new Actuator(plainObject.name, plainObject.type, outputs);
+    return new Actuator(
+      plainObject.id,
+      plainObject.name,
+      plainObject.type,
+      outputs
+    );
   }
 }

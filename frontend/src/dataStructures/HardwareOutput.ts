@@ -1,4 +1,5 @@
 export default class HardwareOutput {
+  id: number;
   name: string;
   private _maxValue: number;
   private _minValue: number;
@@ -8,6 +9,7 @@ export default class HardwareOutput {
   private _displayedSteps: number;
   private _value: number;
   constructor(
+    id: number,
     name = "",
     maxValue: number,
     minValue: number,
@@ -16,6 +18,7 @@ export default class HardwareOutput {
     displayedMinValue: number,
     displayedSteps: number
   ) {
+    this.id = id;
     this.name = name;
     this._maxValue = maxValue;
     this._minValue = minValue;
@@ -37,6 +40,7 @@ export default class HardwareOutput {
     }
     return value;
   };
+
   set maxValue(value: number) {
     this._maxValue = this.convertToNumber(value);
   }

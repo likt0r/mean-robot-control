@@ -25,6 +25,7 @@ export default defineComponent({
           name: "Head-Yaw",
           outputs: [
             {
+              name: "Pin 1",
               id: 11,
               maxValue: 0.9,
               minValue: 0.1,
@@ -42,6 +43,7 @@ export default defineComponent({
           outputs: [
             {
               id: 12,
+              name: "Pin 2",
               maxValue: 0.4,
               minValue: 0.2,
               pwmFrequency: 100,
@@ -58,6 +60,7 @@ export default defineComponent({
           outputs: [
             {
               id: 13,
+              name: "Pin 12",
               maxValue: 0.9,
               minValue: 0.2,
               pwmFrequency: 100,
@@ -70,10 +73,11 @@ export default defineComponent({
         {
           id: 4,
           type: "led",
-          name: "Head-Pitch",
+          name: "Arm-Pitch",
           outputs: [
             {
               id: 14,
+              name: "Pin 48",
               maxValue: 1,
               minValue: 0,
               pwmFrequency: 100,
@@ -86,10 +90,11 @@ export default defineComponent({
         {
           id: 5,
           type: "rgbLed",
-          name: "Head-Pitch",
+          name: "LED",
           outputs: [
             {
               id: 15,
+              name: "Red Pin 48",
               maxValue: 1,
               minValue: 0,
               pwmFrequency: 100,
@@ -99,6 +104,7 @@ export default defineComponent({
             },
             {
               id: 16,
+              name: "Green Pin 48",
               maxValue: 1,
               minValue: 0,
               pwmFrequency: 100,
@@ -108,6 +114,7 @@ export default defineComponent({
             },
             {
               id: 17,
+              name: "Blue Pin 48",
               maxValue: 1,
               minValue: 0,
               pwmFrequency: 100,
