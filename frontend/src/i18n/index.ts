@@ -18,3 +18,9 @@ export function getI18n() {
     });
   return i18n;
 }
+
+export default {
+  messages,
+  defaultLocale,
+  getI18n
+};

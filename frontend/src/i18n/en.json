@@ -22,5 +22,8 @@
   "displayedMinValue": "Displayed minimum value",
   "displayedSteps": "Displayed steps",
   "newHardwareOutputTitle": "New hardware output",
-  "add": "add"
+  "add": "add",
+  "greaterZero": "value hast to be greater zero",
+  "smallerEqualOne": "value hast to be smaller or equal one",
+  "greaterEqualZero": "value hast to be equal or greater zero"
 }

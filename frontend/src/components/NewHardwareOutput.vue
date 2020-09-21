@@ -2,7 +2,14 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" transition="dialog-bottom-transition">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" icon v-on="on">
+        <v-btn
+          ref="openDialogButton"
+          color="primary"
+          dark
+          v-bind="attrs"
+          icon
+          v-on="on"
+        >
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </template>
@@ -25,7 +32,6 @@
               <v-col cols="10">
                 <v-text-field
                   ref="name"
-                  :rules="[greaterZero]"
                   v-model="data.name"
                   :label="$t('output')"
                   required
@@ -35,6 +41,7 @@
                 <v-text-field
                   ref="pwmFrequency"
                   v-model="data.pwmFrequency"
+                  :rules="[greaterZero]"
                   min="0"
                   type="number"
                   :label="$t('pwmFrequency')"
@@ -46,6 +53,7 @@
                   ref="maxValue"
                   max="1"
                   min="0"
+                  :rules="[greaterZero, smallerEqualOne]"
                   v-model="data.maxValue"
                   type="number"
                   :label="$t('maxValue')"
@@ -55,6 +63,7 @@
               <v-col cols="12" sm="3">
                 <v-text-field
                   ref="minValue"
+                  :rules="[greaterEqualZero, smallerEqualOne]"
                   min="0"
                   v-model="data.minValue"
                   type="number"
@@ -68,6 +77,7 @@
                 <v-text-field
                   ref="displayedMaxValue"
                   v-model="data.displayedMaxValue"
+                  :rules="[greaterZero]"
                   type="number"
                   :label="$t('displayedMaxValue')"
                   min="0"
@@ -79,6 +89,7 @@
                   ref="displayedMinValue"
                   v-model="data.displayedMinValue"
                   type="number"
+                  :rules="[greaterEqualZero]"
                   :label="$t('displayedMinValue')"
                   min="0"
                   required
@@ -88,6 +99,7 @@
                 <v-text-field
                   ref="displayedSteps"
                   v-model="data.displayedSteps"
+                  :rules="[greaterZero]"
                   type="number"
                   :label="$t('displayedSteps')"
                   min="0"
@@ -127,8 +139,8 @@ export default defineComponent({
       sound,
       widgets,
       greaterZero: greaterEqual(0, "greaterZero"),
-      maxValue: greaterEqual(0, "greaterZero"),
-      minValue: smallerEqual(0, "smallerEqualOne")
+      greaterEqualZero: greaterEqual(0, "greaterEqualZero"),
+      smallerEqualOne: smallerEqual(0, "smallerEqualOne")
     };
   }
 });
