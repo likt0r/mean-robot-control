@@ -4,16 +4,15 @@ import VueCompositionAPI from "@vue/composition-api";
 import Vuetify from "vuetify";
 import HardwareOutputComponent from "@/components/HardwareOutputComponent.vue";
 import HardwareOutput from "@/dataStructures/HardwareOutput";
-jest.mock("@/i18n/index", () => {
-  return {
-    getI18n: () => ({ t: (message: String) => message })
-  };
-});
+
+import VueI18n from "vue-i18n";
+import { getI18n } from "@/i18n/index";
 Vue.use(Vuetify);
+Vue.use(VueI18n);
 Vue.use(VueCompositionAPI);
 const oD = new HardwareOutput(12, "head-yaw", 1, 0.2, 100, 100, 0, 100);
 
-describe("ListSubItemHardwareOutput.vue", () => {
+describe("HardwareOutputComponent.vue", () => {
   it("renders all values in its correct input", () => {
     const wrapper = mount(HardwareOutputComponent, {
       propsData: {
@@ -49,5 +48,57 @@ describe("ListSubItemHardwareOutput.vue", () => {
     expect((wrapper.vm.$refs.displayedSteps as HTMLInputElement).value).toBe(
       oD.displayedSteps
     );
+  });
+  it("Test input rules are working correct", () => {
+    const wrapper = mount(HardwareOutputComponent, {
+      propsData: {
+        name: oD.name,
+        pwmFrequency: oD.pwmFrequency,
+        maxValue: oD.maxValue,
+        minValue: oD.minValue,
+        displayedMaxValue: oD.displayedMaxValue,
+        displayedMinValue: oD.displayedMinValue,
+        displayedSteps: oD.displayedSteps
+      },
+      localVue: createLocalVue(),
+      stubs: {},
+      i18n: getI18n()
+    });
+
+    // greaterMinValue,
+    // smallerMaxValue,
+    // greaterDisplayedMinValue,
+    // smallerDisplayedMaxValue
+    expect(typeof (wrapper.vm as any).greaterZero(-1)).toBe("string");
+    expect(typeof (wrapper.vm as any).greaterZero(0)).toBe("string");
+    expect((wrapper.vm as any).greaterZero(1)).toBe(true);
+
+    expect(typeof (wrapper.vm as any).greaterEqualZero(-1)).toBe("string");
+    expect((wrapper.vm as any).greaterEqualZero(1)).toBe(true);
+    expect((wrapper.vm as any).greaterEqualZero(1)).toBe(true);
+
+    expect(typeof (wrapper.vm as any).smallerOne(2)).toBe("string");
+    expect(typeof (wrapper.vm as any).smallerOne(1)).toBe("string");
+    expect((wrapper.vm as any).smallerOne(-1)).toBe(true);
+
+    expect(typeof (wrapper.vm as any).smallerEqualOne(2)).toBe("string");
+    expect((wrapper.vm as any).smallerEqualOne(1)).toBe(true);
+    expect((wrapper.vm as any).smallerEqualOne(-1)).toBe(true);
+
+    expect(typeof (wrapper.vm as any).greaterMinValue(oD.minValue)).toBe(
+      "string"
+    );
+    expect(typeof (wrapper.vm as any).greaterMinValue(oD.minValue - 1)).toBe(
+      "string"
+    );
+    expect((wrapper.vm as any).greaterMinValue(oD.minValue + 1)).toBe(true);
+
+    expect(typeof (wrapper.vm as any).smallerMaxValue(oD.maxValue)).toBe(
+      "string"
+    );
+    expect(typeof (wrapper.vm as any).smallerMaxValue(oD.maxValue + 1)).toBe(
+      "string"
+    );
+    expect((wrapper.vm as any).smallerMaxValue(oD.maxValue - 1)).toBe(true);
   });
 });

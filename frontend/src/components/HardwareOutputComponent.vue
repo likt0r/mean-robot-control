@@ -30,7 +30,11 @@
             max="1"
             min="0"
             v-model="maxValue"
-            :rules="[greaterZero(maxValue), smallerEqualOne(maxValue)]"
+            :rules="[
+              greaterZero(maxValue),
+              smallerEqualOne(maxValue),
+              greaterMinValue(maxValue)
+            ]"
             type="number"
             :label="$t('maxValue')"
             required
@@ -40,7 +44,11 @@
           <v-text-field
             ref="minValue"
             v-model="minValue"
-            :rules="[greaterEqualZero(minValue), smallerOne(minValue)]"
+            :rules="[
+              greaterEqualZero(minValue),
+              smallerOne(minValue),
+              smallerMaxValue(minValue)
+            ]"
             type="number"
             :label="$t('minValue')"
             required
@@ -112,12 +120,40 @@ export default defineComponent({
     displayedMinValue: Number,
     displayedSteps: Number
   },
-  setup() {
+  setup(props, ctx) {
+    function greaterMinValue(value: number) {
+      if (props.minValue === null) return true;
+      else return value > props.minValue || ctx.root.$i18n.t("greaterMinValue");
+    }
+    function smallerMaxValue(value: number) {
+      if (props.maxValue === null) return true;
+      else return value < props.maxValue || ctx.root.$i18n.t("smallerMaxValue");
+    }
+    function greaterDisplayedMinValue(value: number) {
+      if (props.displayedMinValue === null) return true;
+      else
+        return (
+          value > props.displayedMinValue ||
+          ctx.root.$i18n.t("greaterDisplayedMinValue")
+        );
+    }
+    function smallerDisplayedMaxValue(value: number) {
+      if (props.displayedMaxValue === null) return true;
+      else
+        return (
+          value < props.displayedMaxValue ||
+          ctx.root.$i18n.t("smallerDisplayedMaxValue")
+        );
+    }
     return {
       greaterZero: greater(0, "greaterZero"),
       greaterEqualZero: greaterEqual(0, "greaterEqualZero"),
       smallerEqualOne: smallerEqual(1, "smallerEqualOne"),
-      smallerOne: smaller(1, "smallerOne")
+      smallerOne: smaller(1, "smallerOne"),
+      greaterMinValue,
+      smallerMaxValue,
+      greaterDisplayedMinValue,
+      smallerDisplayedMaxValue
     };
   }
 });
