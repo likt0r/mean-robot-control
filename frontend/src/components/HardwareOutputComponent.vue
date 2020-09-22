@@ -5,6 +5,7 @@
       <v-text-field
         ref="name"
         v-model="name"
+        :rules="[nameNotEmpty(name)]"
         :label="$t('output')"
         required
       ></v-text-field>
@@ -61,8 +62,8 @@
             ref="displayedMaxValue"
             v-model="displayedMaxValue"
             :rules="[
-              greaterEqualZero(displayedMaxValue),
-              smallerOne(displayedMaxValue)
+              greaterZero(displayedMaxValue),
+              greaterDisplayedMinValue(displayedMaxValue)
             ]"
             type="number"
             :label="$t('displayedMaxValue')"
@@ -73,7 +74,10 @@
           <v-text-field
             ref="displayedMinValue"
             v-model="displayedMinValue"
-            :rules="[greaterEqualZero(displayedMinValue)]"
+            :rules="[
+              greaterEqualZero(displayedMinValue),
+              smallerDisplayedMaxValue(displayedMinValue)
+            ]"
             type="number"
             :label="$t('displayedMinValue')"
             required
@@ -83,6 +87,7 @@
           <v-text-field
             ref="displayedSteps"
             v-model="displayedSteps"
+            :rules="[greaterOne(displayedSteps)]"
             type="number"
             :label="$t('displayedSteps')"
             required
@@ -103,7 +108,8 @@ import {
   greaterEqual,
   smallerEqual,
   greater,
-  smaller
+  smaller,
+  stringNotEmpty
 } from "../tools/formRules";
 export default defineComponent({
   // type inference enabled
@@ -147,9 +153,11 @@ export default defineComponent({
     }
     return {
       greaterZero: greater(0, "greaterZero"),
+      greaterOne: greater(1, "greaterOne"),
       greaterEqualZero: greaterEqual(0, "greaterEqualZero"),
       smallerEqualOne: smallerEqual(1, "smallerEqualOne"),
       smallerOne: smaller(1, "smallerOne"),
+      nameNotEmpty: stringNotEmpty("nameHasToBeSet"),
       greaterMinValue,
       smallerMaxValue,
       greaterDisplayedMinValue,

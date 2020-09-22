@@ -23,3 +23,10 @@ export function greaterEqual(border: number, message: string) {
     return value >= border || translated;
   };
 }
+
+export function stringNotEmpty(message: string) {
+  const translated = getI18n().t(message);
+  return function(value: string) {
+    return value != "" || translated;
+  };
+}
