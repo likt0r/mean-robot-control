@@ -4,8 +4,9 @@
     <v-card-actions class="pt-0">
       <v-text-field
         ref="name"
-        v-model="name"
-        :rules="[nameNotEmpty(name)]"
+        v-model="_name"
+        @input="$emit('update:name', $event)"
+        :rules="[required(name), nameNotEmpty(name)]"
         :label="$t('output')"
         required
       ></v-text-field>
@@ -18,8 +19,9 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="pwmFrequency"
-            v-model="pwmFrequency"
-            :rules="[greaterZero(pwmFrequency)]"
+            v-model="_pwmFrequency"
+            @input="$emit('update:pwmFrequency', parseInt($event))"
+            :rules="[required(pwmFrequency), greaterZero(pwmFrequency)]"
             type="number"
             :label="$t('pwmFrequency')"
             required
@@ -30,8 +32,10 @@
             ref="maxValue"
             max="1"
             min="0"
-            v-model="maxValue"
+            v-model="_maxValue"
+            @input="$emit('update:maxValue', parseFloat($event))"
             :rules="[
+              required(maxValue),
               greaterZero(maxValue),
               smallerEqualOne(maxValue),
               greaterMinValue(maxValue)
@@ -44,8 +48,10 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="minValue"
-            v-model="minValue"
+            v-model="_minValue"
+            @input="$emit('update:minValue', parseFloat($event))"
             :rules="[
+              required(minValue),
               greaterEqualZero(minValue),
               smallerOne(minValue),
               smallerMaxValue(minValue)
@@ -60,8 +66,10 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="displayedMaxValue"
-            v-model="displayedMaxValue"
+            v-model="_displayedMaxValue"
+            @input="$emit('update:displayedMaxValue', parseFloat($event))"
             :rules="[
+              required(displayedMaxValue),
               greaterZero(displayedMaxValue),
               greaterDisplayedMinValue(displayedMaxValue)
             ]"
@@ -73,8 +81,10 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="displayedMinValue"
-            v-model="displayedMinValue"
+            v-model="_displayedMinValue"
+            @input="$emit('update:displayedMinValue', parseFloat($event))"
             :rules="[
+              required(displayedMinValue),
               greaterEqualZero(displayedMinValue),
               smallerDisplayedMaxValue(displayedMinValue)
             ]"
@@ -86,8 +96,9 @@
         <v-col cols="12" sm="3">
           <v-text-field
             ref="displayedSteps"
-            v-model="displayedSteps"
-            :rules="[greaterOne(displayedSteps)]"
+            v-model="_displayedSteps"
+            @input="$emit('update:displayedSteps', parseInt($event))"
+            :rules="[required(displayedSteps), greaterOne(displayedSteps)]"
             type="number"
             :label="$t('displayedSteps')"
             required
@@ -102,14 +113,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
-import HardwareOutput from "../dataStructures/HardwareOutput";
+import { defineComponent, ref, watch } from "@vue/composition-api";
 import {
   greaterEqual,
   smallerEqual,
   greater,
   smaller,
-  stringNotEmpty
+  stringNotEmpty,
+  required
 } from "../tools/formRules";
 export default defineComponent({
   // type inference enabled
@@ -127,16 +138,30 @@ export default defineComponent({
     displayedSteps: Number
   },
   setup(props, ctx) {
+    const _name = ref(props.name);
+    const _pwmFrequency = ref(props.pwmFrequency);
+    const _maxValue = ref(props.maxValue);
+    const _minValue = ref(props.minValue);
+    const _displayedMaxValue = ref(props.displayedMaxValue);
+    const _displayedMinValue = ref(props.displayedMinValue);
+    const _displayedSteps = ref(props.displayedSteps);
+
     function greaterMinValue(value: number) {
-      if (props.minValue === null) return true;
+      if (typeof props.minValue === "undefined" || props.minValue === null)
+        return true;
       else return value > props.minValue || ctx.root.$i18n.t("greaterMinValue");
     }
     function smallerMaxValue(value: number) {
-      if (props.maxValue === null) return true;
+      if (typeof props.maxValue === "undefined" || props.maxValue === null)
+        return true;
       else return value < props.maxValue || ctx.root.$i18n.t("smallerMaxValue");
     }
     function greaterDisplayedMinValue(value: number) {
-      if (props.displayedMinValue === null) return true;
+      if (
+        typeof props.displayedMinValue === "undefined" ||
+        props.displayedMinValue === null
+      )
+        return true;
       else
         return (
           value > props.displayedMinValue ||
@@ -144,7 +169,11 @@ export default defineComponent({
         );
     }
     function smallerDisplayedMaxValue(value: number) {
-      if (props.displayedMaxValue === null) return true;
+      if (
+        typeof props.displayedMaxValue === "undefined" ||
+        props.displayedMaxValue === null
+      )
+        return true;
       else
         return (
           value < props.displayedMaxValue ||
@@ -158,11 +187,38 @@ export default defineComponent({
       smallerEqualOne: smallerEqual(1, "smallerEqualOne"),
       smallerOne: smaller(1, "smallerOne"),
       nameNotEmpty: stringNotEmpty("nameHasToBeSet"),
+      required: required("valueRequired"),
       greaterMinValue,
       smallerMaxValue,
       greaterDisplayedMinValue,
-      smallerDisplayedMaxValue
+      smallerDisplayedMaxValue,
+      _name,
+      _pwmFrequency,
+      _maxValue,
+      _minValue,
+      _displayedMaxValue,
+      _displayedMinValue,
+      _displayedSteps
     };
+  },
+
+  methods: {
+    validate() {
+      // eslint-disable-next-line
+      (this.$refs.form as any).validate();
+    },
+    submit() {
+      // eslint-disable-next-line
+      (this.$refs.form as any).submit();
+    },
+    reset() {
+      // eslint-disable-next-line
+      (this.$refs.form as any).reset();
+    },
+    resetValidation() {
+      // eslint-disable-next-line
+      (this.$refs.form as any).resetValidation();
+    }
   }
 });
 </script>

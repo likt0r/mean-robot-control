@@ -5,9 +5,11 @@ export default function usePageTransitions(router: VueRouter) {
   const DEFAULT_TRANSITION = "fade";
   const prevHeight = ref(0);
   const transitionName = ref(DEFAULT_TRANSITION);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function beforeLeave(element: any) {
     prevHeight.value = parseInt(getComputedStyle(element).height);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function enter(element: any) {
     const { height } = getComputedStyle(element);
     element.style.height = prevHeight.value;
@@ -15,6 +17,7 @@ export default function usePageTransitions(router: VueRouter) {
       element.style.height = height;
     });
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function afterEnter(element: any) {
     element.style.height = "auto";
   }

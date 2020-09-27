@@ -12,8 +12,8 @@ from docopt import docopt
 from gunicorn.app.base import BaseApplication
 from gunicorn.workers.sync import SyncWorker
 
-from example.app import MyService
-from example.config import AppConfig
+from app import MyService
+from config import AppConfig
 
 
 class CustomWorker(SyncWorker):
@@ -40,7 +40,7 @@ class GunicornApp(BaseApplication):
         for key, value in self.options.items():
             self.cfg.set(key.lower(), value)
 
-        self.cfg.set('worker_class', 'example.__main__.CustomWorker')
+        self.cfg.set('worker_class', '__main__.CustomWorker')
 
     def load(self):
         return self.application

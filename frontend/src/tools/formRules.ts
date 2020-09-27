@@ -30,3 +30,10 @@ export function stringNotEmpty(message: string) {
     return value != "" || translated;
   };
 }
+
+export function required(message: string) {
+  const translated = getI18n().t(message);
+  return function(value: any) {
+    return (typeof value !== "undefined" && value !== null) || translated;
+  };
+}

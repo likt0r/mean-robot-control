@@ -13,15 +13,16 @@
           <v-icon>mdi-plus</v-icon>
         </v-btn>
       </template>
-      <form v-bind="valid">
+      <v-form ref="form" v-model="valid">
         <HardwareOutputComponent
-          :name="output.name"
-          :pwmFrequency="output.pwmFrequency"
-          :maxValue="output.maxValue"
-          :minValue="output.minValue"
-          :displayedMaxValue="output.displayedMaxValue"
-          :displayedMinValue="output.displayedMinValue"
-          :displayedSteps="output.displayedSteps"
+          ref="hardwareOutputs"
+          :name.sync="output.name"
+          :pwmFrequency.sync="output.pwmFrequency"
+          :maxValue.sync="output.maxValue"
+          :minValue.sync="output.minValue"
+          :displayedMaxValue.sync="output.displayedMaxValue"
+          :displayedMinValue.sync="output.displayedMinValue"
+          :displayedSteps.sync="output.displayedSteps"
         >
           <template v-slot:header>
             <v-toolbar dark color="primary">
@@ -33,32 +34,30 @@
               }}</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn dark text @click="dialog = false" :disabled="valid">{{
-                  $t("add")
-                }}</v-btn>
+                <v-btn dark text @click="submit()">{{ $t("add") }}</v-btn>
               </v-toolbar-items>
             </v-toolbar>
           </template>
         </HardwareOutputComponent>
-      </form>
+      </v-form>
     </v-dialog>
   </v-row>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent, ref, reactive } from "@vue/composition-api";
-import { greaterEqual, smallerEqual, greater } from "../tools/formRules";
 import HardwareOutputComponent from "./HardwareOutputComponent.vue";
 export default defineComponent({
   components: {
     HardwareOutputComponent
   },
+
   setup() {
     const dialog = ref(false);
+    const valid = ref(true);
     const notifications = ref(false);
     const sound = ref(true);
     const widgets = ref(false);
-    const valid = ref(true);
     const output = reactive({
       name: "",
       pwmFrequency: null,
@@ -74,11 +73,14 @@ export default defineComponent({
       dialog,
       notifications,
       sound,
-      widgets,
-      greaterZero: greaterEqual(0, "greaterZero"),
-      greaterEqualZero: greaterEqual(0, "greaterEqualZero"),
-      smallerEqualOne: smallerEqual(0, "smallerEqualOne")
+      widgets
     };
+  },
+  methods: {
+    submit() {
+      if (!this.valid) return this.$refs.form.validate();
+      this.dialog = false;
+    }
   }
 });
 </script>

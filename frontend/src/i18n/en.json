@@ -24,9 +24,14 @@
   "newHardwareOutputTitle": "New hardware output",
   "add": "add",
   "greaterZero": "Value hast to be greater zero",
-  "smallerEqualOne": "Value hast to be smaller or equal one",
-  "smallerOne": "Value hast to be smaller one",
+  "smallerEqualOne": "Value has to be smaller or equal one",
+  "smallerOne": "Value has to be smaller one",
+  "greaterOne": "Value has to be greater one",
   "greaterEqualZero": "Value has to be equal or greater zero",
   "greaterMinValue": "Value has to be greater minimum value",
-  "smallerMaxValue": "Value has to be smaller maximum value"
+  "smallerMaxValue": "Value has to be smaller maximum value",
+  "greaterDisplayedMinValue": "Value has to be greater displayed minimum value",
+  "smallerDisplayedMaxValue": "Value has to be smaller displayed maximum value",
+  "nameHasToBeSet": "Please set a name",
+  "valueRequired": "Value is required"
 }

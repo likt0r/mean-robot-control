@@ -8,7 +8,8 @@ import {
   smaller,
   smallerEqual,
   greaterEqual,
-  stringNotEmpty
+  stringNotEmpty,
+  required
 } from "@/tools/formRules";
 
 describe("formRules.ts", () => {
@@ -45,10 +46,16 @@ describe("formRules.ts", () => {
     expect(testFn(3)).toBe(true);
   });
   it("test stringNotEmpty,", () => {
-    const border = 2;
     const violationMessage = '345434dsewrwer3424asd3243423§"$"§3';
     const testFn = stringNotEmpty(violationMessage);
     expect(testFn("")).toBe(violationMessage);
+    expect(testFn("2")).toBe(true);
+  });
+  it("test required", () => {
+    const violationMessage = '345434dsewrwer3424asd3243423§"$"§3';
+    const testFn = required(violationMessage);
+    expect(testFn(null)).toBe(violationMessage);
+    expect(testFn(undefined)).toBe(violationMessage);
     expect(testFn("2")).toBe(true);
   });
 });

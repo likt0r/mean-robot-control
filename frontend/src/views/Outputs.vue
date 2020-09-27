@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import axios from "axios";
+// import axios from "axios";
 import { defineComponent, ref } from "@vue/composition-api";
 import ListItemActuator from "@/components/ListItemActuator.vue";
 import Acutator from "../dataStructures/Actuator";

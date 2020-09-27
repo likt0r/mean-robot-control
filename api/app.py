@@ -1,8 +1,8 @@
 import falcon
 
-from example.db.manager import DBManager
-from example.middleware.context import ContextMiddleware
-from example.resources import scores
+from db.manager import DBManager
+from middleware.context import ContextMiddleware
+from resources import scores
 
 
 class MyService(falcon.API):

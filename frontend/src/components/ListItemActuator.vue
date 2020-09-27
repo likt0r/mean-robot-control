@@ -8,29 +8,31 @@
       <v-list-item-title v-text="data.name"></v-list-item-title>
 
       <v-container>
-        <HardwareOutputComponent
-          :outlined="true"
-          v-for="(output, index) in data.outputs"
-          :key="output.id"
-          :name="output.name"
-          :pwmFrequency="output.pwmFrequency"
-          :maxValue="output.maxValue"
-          :minValue="output.minValue"
-          :displayedMaxValue="output.displayedMaxValue"
-          :displayedMinValue="output.displayedMinValue"
-          :displayedSteps="output.displayedSteps"
-        >
-          <template v-slot:headerCardActions>
-            <v-btn
-              ref="delete"
-              icon
-              color="primary"
-              @click="deleteOutput(index)"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </template>
-        </HardwareOutputComponent>
+        <v-form ref="form" v-model="valid">
+          <HardwareOutputComponent
+            :outlined="true"
+            v-for="(output, index) in data.outputs"
+            :key="output.id"
+            :name="output.name"
+            :pwmFrequency="output.pwmFrequency"
+            :maxValue="output.maxValue"
+            :minValue="output.minValue"
+            :displayedMaxValue="output.displayedMaxValue"
+            :displayedMinValue="output.displayedMinValue"
+            :displayedSteps="output.displayedSteps"
+          >
+            <template v-slot:headerCardActions>
+              <v-btn
+                ref="delete"
+                icon
+                color="primary"
+                @click="deleteOutput(index)"
+              >
+                <v-icon>mdi-delete</v-icon>
+              </v-btn>
+            </template>
+          </HardwareOutputComponent>
+        </v-form>
         <NewHardwareOutput> </NewHardwareOutput>
       </v-container>
     </v-list-item-content>
